@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         Github Markdown File Content Navigation
+// @name:zh-CN   Github Markdown 文件内容导航
 // @namespace    http://tampermonkey.net/
 // @version      0.1.0
-// @description  Provide directory navigation of the markdown file content of the github website. | 提供 github 网站 markdown 文件内容的目录导航。
+// @description  Provide directory navigation of the markdown file content of the github website.
+// @description:zh-cn 提供 github 网站 markdown 文件内容的目录导航。
 // @author       wang1212
 // @match        http*://github.com/*/*
 // @grant        none
