@@ -4,6 +4,7 @@
 
 ## Features
 
+- The **code is concise, without any third-party dependencies**, to avoid affecting the page loading speed
 - Generate a tree-shaped directory navigation panel with markdown file content `h1-h6` tags.
 - The directory navigation panel can be **switched to show/hide**, the purpose is not to affect the normal browsing page content.
 - Click the title to **smoothly scroll to the target anchor point**.
