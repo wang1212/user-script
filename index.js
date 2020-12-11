@@ -2,7 +2,7 @@
 // @name         Github Markdown File Content Navigation
 // @name:zh-CN   Github Markdown 文件内容导航
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Provide directory navigation of the markdown file content of the github website.
 // @description:zh-cn 提供 github 网站 markdown 文件内容的目录导航。
 // @author       wang1212
@@ -14,16 +14,24 @@
     'use strict';
 
     const log = console.log
-    log('test')
 
-    function init() {
+    /* ------------------------------- Init ----------------------------- */
+
+    const href = location.href
+    const matchRepository = /https?:\/\/github.com\/.+\/.+/
+
+    const isRepositoryPage = !!href.match(matchRepository)
+
+    /* ------------------------------- Parse MarkDown file content navigation ----------------------------- */
+
+    function updateMarkdownFileContentNavigation() {
         let navBarElem = document.querySelector('.wang1212_md-content-nav')
 
         // Remove existing
         navBarElem && navBarElem.remove()
 
         const rootElem = document.querySelector('.markdown-body')
-        if (!rootElem) return
+        if (!isRepositoryPage || !rootElem) return
 
         // navBar button
         navBarElem = document.createElement('div')
@@ -38,9 +46,8 @@
         navBarPanelElem.innerHTML = ''
 
         // titles
-        const titles = getTitles(rootElem)
+        const titles = getMarkDownContentTitles(rootElem)
         if (!titles.length) return
-        log(titles)
 
         titles.forEach(title => {
             const level = +title.tagName.substr(-1)
@@ -51,7 +58,7 @@ ${title.text}
 `
         })
 
-        /* -----------------CSS Style------------------- */
+        // --- CSS Style ---
         const styleElem = document.createElement('style')
         styleElem.type = 'text/css'
         styleElem.innerHTML = `
@@ -88,12 +95,11 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
 }
 `
 
-
         navBarElem.appendChild(navBarPanelElem)
         document.body.appendChild(navBarElem)
         document.head.appendChild(styleElem)
 
-        /* -----------------Event------------------- */
+        // --- Event ---
         // Show/Hide
         navBarElem.addEventListener("click", (e) => {
             if (e.target !== navBarElem) return
@@ -116,8 +122,10 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
         }, false)
     }
 
+    /* ------------------------------- Utils ----------------------------- */
+
     // parse titles
-    function getTitles(rootElem) {
+    function getMarkDownContentTitles(rootElem) {
         const anchors = rootElem.querySelectorAll('a.anchor')
 
         if (!anchors.length) return
@@ -137,6 +145,16 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
         return titles
     }
 
-    document.addEventListener("pjax:end", init, false)
-    init()
+    /* ------------------------------- Load ----------------------------- */
+
+    function load() {
+        updateMarkdownFileContentNavigation()
+    }
+
+    // Monitor page reload
+    document.addEventListener("pjax:end", load, false)
+
+    //
+    load()
+
 })();
