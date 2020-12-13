@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Github Markdown File Content Navigation
 // @name:zh-CN   Github Markdown 文件内容导航
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/wang1212/github-markdown-file-content-navigation
 // @version      0.1.1
 // @description  Provide directory navigation of the markdown file content of the github website.
 // @description:zh-cn 提供 github 网站 markdown 文件内容的目录导航。
 // @author       wang1212
-// @match        http*://github.com/*/*
+// @match        http*://github.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -36,6 +36,7 @@
         // navBar button
         navBarElem = document.createElement('div')
         navBarElem.classList.add('wang1212_md-content-nav')
+        navBarElem.title = 'Markdown 文件内容导航'
 
         navBarElem.innerText = 'N'
 
@@ -65,7 +66,7 @@ ${title.text}
 .wang1212_md-content-nav {
 position: fixed;
 right: 1rem;
-bottom: 2rem;
+bottom: 3.5rem;
 z-index: 999;
 width: 2rem;
 height: 2rem;
@@ -122,6 +123,53 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
         }, false)
     }
 
+    /* ------------------------------- To Top ----------------------------- */
+
+    // to top button
+    function updateGoToTopButton() {
+        let toTopElem = document.querySelector('.wang1212_to-top')
+
+        // Remove existing
+        toTopElem && toTopElem.remove()
+
+        // toTop button
+        toTopElem = document.createElement('div')
+        toTopElem.classList.add('wang1212_to-top')
+        toTopElem.title = '回到顶部'
+
+        toTopElem.innerText = '↑'
+
+
+        // --- CSS Style ---
+        const styleElem = document.createElement('style')
+        styleElem.type = 'text/css'
+        styleElem.innerHTML = `
+.wang1212_to-top {
+position: fixed;
+right: 1rem;
+bottom: 1rem;
+z-index: 999;
+width: 2rem;
+height: 2rem;
+color: white;
+font-size: 1.5rem;
+line-height: 2rem;
+text-align: center;
+background-color: rgb(36, 41, 46);
+cursor: pointer;
+}
+`
+
+        document.body.appendChild(toTopElem)
+        document.head.appendChild(styleElem)
+
+        // --- Event ---
+        // fly to view
+        toTopElem.addEventListener("click", () => {
+            document.body.scrollIntoView({ behavior: "smooth" })
+        }, false)
+    }
+
     /* ------------------------------- Utils ----------------------------- */
 
     // parse titles
@@ -149,6 +197,7 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
 
     function load() {
         updateMarkdownFileContentNavigation()
+        updateGoToTopButton()
     }
 
     // Monitor page reload
