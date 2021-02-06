@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         Github Markdown File Content Navigation
-// @name:zh-CN   Github Markdown 文件内容导航
+// @name         Git Markdown Content Navigation
+// @name:zh-CN   Git Markdown 文件内容导航
 // @namespace    https://github.com/wang1212/github-markdown-file-content-navigation
-// @version      0.1.1
-// @description  Provide directory navigation of the markdown file content of the github website.
-// @description:zh-cn 提供 github 网站 markdown 文件内容的目录导航。
+// @version      0.2.0
+// @description  Provide directory navigation of the markdown file content of the github/gitee website.
+// @description:zh-cn 提供 github/gitee 网站 markdown 文件内容的目录导航。
 // @author       wang1212
 // @match        http*://github.com/*
+// @match        http*://gitee.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -18,9 +19,15 @@
 	/* ------------------------------- Init ----------------------------- */
 
 	const href = location.href
-	const matchRepository = /https?:\/\/github.com\/.+\/.+/
 
-	const isRepositoryPage = !!href.match(matchRepository)
+	const matchGithub = /github/
+	const matchGithubRepository = /https?:\/\/github.com\/.+\/.+/
+	const matchGitee = /gitee/
+	const matchGiteeRepository = /https?:\/\/gitee.com\/.+\/.+/
+
+	const isGithub = !!href.match(matchGithub)
+	const isGitee = !!href.match(matchGitee)
+	const isRepositoryPage = !!(href.match(matchGithubRepository) || href.match(matchGiteeRepository))
 
 	/* ------------------------------- Parse MarkDown file content navigation ----------------------------- */
 
@@ -30,8 +37,11 @@
 		// Remove existing
 		navBarElem && navBarElem.remove()
 
-		const rootElem = document.querySelector('.markdown-body')
-		if (!isRepositoryPage || !rootElem) return
+		if (!isRepositoryPage) return
+
+		// titles
+		const titles = getMarkDownContentTitles()
+		if (!titles.length) return
 
 		// navBar button
 		navBarElem = document.createElement('div')
@@ -46,10 +56,7 @@
 
 		navBarPanelElem.innerHTML = ''
 
-		// titles
-		const titles = getMarkDownContentTitles(rootElem)
-		if (!titles.length) return
-
+		// draw titles
 		titles.forEach((title) => {
 			const level = +title.tagName.substr(-1)
 			navBarPanelElem.innerHTML += `
@@ -69,7 +76,7 @@ ${title.text}
 position: fixed;
 right: 1rem;
 bottom: 3.5rem;
-z-index: 999;
+z-index: 1999;
 width: 2rem;
 height: 2rem;
 color: white;
@@ -92,6 +99,9 @@ color: #ddd;
 text-align: left;
 background: white;
 box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
+}
+.wang1212_md-content-nav_to-anchor {
+line-height: 1.6 !important;
 }
 .wang1212_md-content-nav_to-anchor:hover {
 	color: rgb(0, 0, 0);
@@ -127,7 +137,7 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
 				const anchorElem = document.getElementById(e.target.dataset.anchor)
 				if (!anchorElem) return
 
-				anchorElem.scrollIntoView({ behavior: 'smooth' })
+				anchorElem.scrollIntoView({ behavior: 'smooth', block: 'start' })
 			},
 			false
 		)
@@ -157,7 +167,7 @@ box-shadow: rgba(0, 0, 0, 0.25) 0 0 0.5rem 0;
 position: fixed;
 right: 1rem;
 bottom: 1rem;
-z-index: 999;
+z-index: 1999;
 width: 2rem;
 height: 2rem;
 color: white;
@@ -186,10 +196,14 @@ cursor: pointer;
 	/* ------------------------------- Utils ----------------------------- */
 
 	// parse titles
-	function getMarkDownContentTitles(rootElem) {
+	function getMarkDownContentTitles() {
+		let rootElem = document.querySelector('.markdown-body')
+
+		if (!rootElem) return []
+
 		const anchors = rootElem.querySelectorAll('a.anchor')
 
-		if (!anchors.length) return
+		if (!anchors.length) return []
 
 		const titles = []
 
@@ -215,6 +229,13 @@ cursor: pointer;
 
 	// Monitor page reload
 	document.addEventListener('pjax:end', load, false)
+
+	if (isGitee) {
+		// Monitor page modify
+		const observer = new MutationObserver(load)
+
+		observer.observe(document.querySelector('.tree-holder'), { childList: true, subtree: false })
+	}
 
 	//
 	load()

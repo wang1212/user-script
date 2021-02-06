@@ -1,10 +1,10 @@
 # Github Markdown 文件内容导航
 
-【用户脚本】提供 github 网站的 markdown 文件内容的目录导航。
+【用户脚本】提供 **github/gitee** 网站的 markdown 文件内容的目录导航。
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-[下载](https://greasyfork.org/zh-CN/scripts/417038-github-markdown-file-content-navigation)
+[下载](https://greasyfork.org/zh-CN/scripts/421316-git-markdown-content-navigation)
 
 ## 功能
 

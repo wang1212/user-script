@@ -1,10 +1,10 @@
 # Github Markdown File Content Navigation
 
-[User Script] Provide directory navigation of the markdown file content of the github website.
+[User Script] Provide directory navigation of the markdown file content of the **github/gitee** website.
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-[Download](https://greasyfork.org/zh-CN/scripts/417038-github-markdown-file-content-navigation)
+[Download](https://greasyfork.org/scripts/421316-git-markdown-content-navigation)
 
 ## Features
 
