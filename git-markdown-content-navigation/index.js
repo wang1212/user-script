@@ -2,7 +2,7 @@
 // @name         Git Markdown Content Navigation
 // @name:zh-CN   Git Markdown 文件内容导航
 // @namespace    https://github.com/wang1212/user-script/blob/main/git-markdown-content-navigation
-// @version      0.2.0
+// @version      0.2.1
 // @description  Provide directory navigation of the markdown file content of the github/gitee website.
 // @description:zh-cn 提供 github/gitee 网站 markdown 文件内容的目录导航。
 // @author       wang1212
