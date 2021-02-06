@@ -1,4 +1,4 @@
-# Github Markdown 文件内容导航
+# Git Markdown 文件内容导航
 
 【用户脚本】提供 **github/gitee** 网站的 markdown 文件内容的目录导航。
 

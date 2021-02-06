@@ -1,4 +1,4 @@
-# Github Markdown File Content Navigation
+# Git Markdown Content Navigation
 
 [User Script] Provide directory navigation of the markdown file content of the **github/gitee** website.
 
