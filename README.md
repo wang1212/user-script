@@ -1,12 +1,15 @@
 # User Script
 
+![LICENSE](https://badgen.net/github/license/wang1212/user-script)
+![LAST COMMIT](https://badgen.net/github/last-commit/wang1212/user-script)
+
 My user script tool.
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-CN.md)
 
 ## Scripts
 
-- [git-markdown-content-navigation](./git-markdown-content-navigation)
+- [Git Markdown Content Navigation](./git-markdown-content-navigation)
 
 ## More
 

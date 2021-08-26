@@ -1,12 +1,15 @@
 # 用户脚本
 
+![LICENSE](https://badgen.net/github/license/wang1212/user-script)
+![LAST COMMIT](https://badgen.net/github/last-commit/wang1212/user-script)
+
 我的用户脚本工具。
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
 ## 脚本
 
-- [git-markdown-content-navigation](./git-markdown-content-navigation)
+- [Git Markdown Content Navigation](./git-markdown-content-navigation)
 
 ## 更多
 
