@@ -2,7 +2,7 @@
 // @name         Git Markdown Content Navigation
 // @name:zh-CN   Git Markdown 文件内容导航
 // @namespace    https://github.com/wang1212/user-script/blob/main/git-markdown-content-navigation
-// @version      0.3.0
+// @version      0.3.1
 // @description  Provide directory navigation of the markdown file content of the github/gitee website.
 // @description:zh-cn 提供 github/gitee 网站 markdown 文件内容的目录导航。
 // @author       wang1212
@@ -13,10 +13,11 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @supportURL   https://github.com/wang1212/user-script/blob/main/git-markdown-content-navigation
+// @license      MIT
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict';
 
   const log = console.log;
 
@@ -31,11 +32,11 @@
     //
     if (menu_item_id_switch) GM_unregisterMenuCommand(menu_item_id_switch);
 
-    menu_item_value_switch = GM_getValue("menu_item_value_switch");
+    menu_item_value_switch = GM_getValue('menu_item_value_switch');
     menu_item_id_switch = GM_registerMenuCommand(
-      !menu_item_value_switch ? "默认显示 [点击切换]" : "默认隐藏 [点击切换]",
+      !menu_item_value_switch ? '默认显示 [点击切换]' : '默认隐藏 [点击切换]',
       function () {
-        GM_setValue("menu_item_value_switch", !menu_item_value_switch);
+        GM_setValue('menu_item_value_switch', !menu_item_value_switch);
         location.reload();
       }
     );
@@ -43,9 +44,9 @@
     //
     if (menu_item_id_source) GM_unregisterMenuCommand(menu_item_id_source);
 
-    menu_item_id_source = GM_registerMenuCommand("源码 [GitHub]", function () {
+    menu_item_id_source = GM_registerMenuCommand('源码 [GitHub]', function () {
       GM_openInTab(
-        "https://github.com/wang1212/user-script/tree/main/git-markdown-content-navigation",
+        'https://github.com/wang1212/user-script/tree/main/git-markdown-content-navigation',
         { active: true, insert: true, setParent: true }
       );
     });
@@ -53,9 +54,9 @@
     //
     if (menu_item_id_feedback) GM_unregisterMenuCommand(menu_item_id_feedback);
 
-    menu_item_id_feedback = GM_registerMenuCommand("反馈 & 更新", function () {
+    menu_item_id_feedback = GM_registerMenuCommand('反馈 & 更新', function () {
       GM_openInTab(
-        "https://greasyfork.org/scripts/421316-git-markdown-content-navigation",
+        'https://greasyfork.org/scripts/421316-git-markdown-content-navigation',
         { active: true, insert: true, setParent: true }
       );
     });
@@ -81,7 +82,7 @@
   /* ------------------------------- Parse MarkDown file content navigation ----------------------------- */
 
   function updateMarkdownFileContentNavigation() {
-    let navBarElem = document.querySelector(".wang1212_md-content-nav");
+    let navBarElem = document.querySelector('.wang1212_md-content-nav');
 
     // Remove existing
     navBarElem && navBarElem.remove();
@@ -93,17 +94,17 @@
     if (!titles.length) return;
 
     // navBar button
-    navBarElem = document.createElement("div");
-    navBarElem.classList.add("wang1212_md-content-nav");
-    navBarElem.title = "Markdown 文件内容导航";
+    navBarElem = document.createElement('div');
+    navBarElem.classList.add('wang1212_md-content-nav');
+    navBarElem.title = 'Markdown 文件内容导航';
 
-    navBarElem.innerText = "N";
+    navBarElem.innerText = 'N';
 
     // Panel
-    const navBarPanelElem = document.createElement("div");
-    navBarPanelElem.classList.add("wang1212_md-content-nav_panel");
+    const navBarPanelElem = document.createElement('div');
+    navBarPanelElem.classList.add('wang1212_md-content-nav_panel');
 
-    navBarPanelElem.innerHTML = "";
+    navBarPanelElem.innerHTML = '';
 
     // draw titles
     titles.forEach((title) => {
@@ -120,8 +121,8 @@ ${title.text}
     });
 
     // --- CSS Style ---
-    const styleElem = document.createElement("style");
-    styleElem.type = "text/css";
+    const styleElem = document.createElement('style');
+    styleElem.type = 'text/css';
     styleElem.innerHTML = `
 .wang1212_md-content-nav {
 position: fixed;
@@ -168,33 +169,33 @@ transition: all 0.4s linear;
     // --- Event ---
     // Show/Hide
     navBarElem.addEventListener(
-      "click",
+      'click',
       (e) => {
         if (e.target !== navBarElem) return;
 
-        if (navBarPanelElem.style.display === "none") {
-          navBarPanelElem.style.display = "block";
+        if (navBarPanelElem.style.display === 'none') {
+          navBarPanelElem.style.display = 'block';
         } else {
-          navBarPanelElem.style.display = "none";
+          navBarPanelElem.style.display = 'none';
         }
       },
       false
     );
     if (menu_item_value_switch) {
-      navBarPanelElem.style.display = "none";
+      navBarPanelElem.style.display = 'none';
     }
 
     // fly to view
     navBarPanelElem.addEventListener(
-      "click",
+      'click',
       (e) => {
-        if (!e.target.classList.contains("wang1212_md-content-nav_to-anchor"))
+        if (!e.target.classList.contains('wang1212_md-content-nav_to-anchor'))
           return;
 
         const anchorElem = document.getElementById(e.target.dataset.anchor);
         if (!anchorElem) return;
 
-        anchorElem.scrollIntoView({ behavior: "smooth", block: "start" });
+        anchorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
       },
       false
     );
@@ -204,21 +205,21 @@ transition: all 0.4s linear;
 
   // to top button
   function updateGoToTopButton() {
-    let toTopElem = document.querySelector(".wang1212_to-top");
+    let toTopElem = document.querySelector('.wang1212_to-top');
 
     // Remove existing
     toTopElem && toTopElem.remove();
 
     // toTop button
-    toTopElem = document.createElement("div");
-    toTopElem.classList.add("wang1212_to-top");
-    toTopElem.title = "回到顶部";
+    toTopElem = document.createElement('div');
+    toTopElem.classList.add('wang1212_to-top');
+    toTopElem.title = '回到顶部';
 
-    toTopElem.innerText = "↑";
+    toTopElem.innerText = '↑';
 
     // --- CSS Style ---
-    const styleElem = document.createElement("style");
-    styleElem.type = "text/css";
+    const styleElem = document.createElement('style');
+    styleElem.type = 'text/css';
     styleElem.innerHTML = `
 .wang1212_to-top {
 position: fixed;
@@ -242,9 +243,9 @@ cursor: pointer;
     // --- Event ---
     // fly to view
     toTopElem.addEventListener(
-      "click",
+      'click',
       () => {
-        document.body.scrollIntoView({ behavior: "smooth" });
+        document.body.scrollIntoView({ behavior: 'smooth' });
       },
       false
     );
@@ -254,11 +255,11 @@ cursor: pointer;
 
   // parse titles
   function getMarkDownContentTitles() {
-    let rootElem = document.querySelector(".markdown-body");
+    let rootElem = document.querySelector('.markdown-body');
 
     if (!rootElem) return [];
 
-    const anchors = rootElem.querySelectorAll("a.anchor");
+    const anchors = rootElem.querySelectorAll('a.anchor');
 
     if (!anchors.length) return [];
 
@@ -285,13 +286,17 @@ cursor: pointer;
   }
 
   // Monitor page reload
-  document.addEventListener("pjax:end", load, false);
+  document.addEventListener('pjax:end', load, false);
+  // see docs: https://turbo.hotwired.dev/reference/events
+  // see https://github.com/refined-github/refined-github/issues/5719
+  //document.addEventListener('turbo:render', load, false)
+  document.documentElement.addEventListener('turbo:render', load, false);
 
   if (isGitee) {
     // Monitor page modify
     const observer = new MutationObserver(load);
 
-    observer.observe(document.querySelector(".tree-holder"), {
+    observer.observe(document.querySelector('.tree-holder'), {
       childList: true,
       subtree: false,
     });

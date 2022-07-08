@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.1 (2022-07-09)
+
+- fix: github page content change navigation bar does not trigger update
+
 ## v0.3.0 (2022-03-20)
 
 - feat: added menu bar to allow setting default show/hide [https://github.com/wang1212/user-script/issues/1]
