@@ -6,6 +6,8 @@ English | [简体中文](./README.zh-CN.md)
 
 [Install](https://greasyfork.org/scripts/431440-nodejs-document-content-navigation)
 
+> :smile: The Node.js documentation official website already supports ToC (Table of contents)。
+
 ## Features
 
 - The **code is concise, without any third-party dependencies**, to avoid affecting the page loading speed

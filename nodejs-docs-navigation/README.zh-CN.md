@@ -6,6 +6,8 @@
 
 [安装](https://greasyfork.org/zh-CN/scripts/431440-nodejs-document-content-navigation)
 
+> :smile: Node.js 文档官网已经支持 ToC(Table of contents)。
+
 ## 功能
 
 - 代码**简洁明了，没有任何第三方依赖性**，以避免影响页面加载速度。
